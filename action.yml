@@ -61,6 +61,9 @@ runs:
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       TARGET_DIRECTORY: ${{ inputs.target-directory }}
       CREATE_TARGET_BRANCH_IF_NEEDED: ${{ inputs.create-target-branch-if-needed }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      GITHUB_REF: ${{ github.ref }}
+      GITHUB_SHA: ${{ github.sha }}
 branding:
   icon: git-commit
   color: green
