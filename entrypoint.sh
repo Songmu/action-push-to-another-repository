@@ -36,7 +36,7 @@ then
 elif [ -n "${API_TOKEN_GITHUB:=}" ]
 then
 	echo "[+] Using API_TOKEN_GITHUB"
-	GIT_CMD_REPOSITORY="https://$DESTINATION_REPOSITORY_USERNAME:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
+	GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
 else
 	echo "::error::API_TOKEN_GITHUB and SSH_DEPLOY_KEY are empty. Please fill one (recommended the SSH_DEPLOY_KEY)"
 	exit 1
@@ -121,6 +121,9 @@ then
 	echo "actions/checkout@v2. See: https://github.com/cpina/push-to-another-repository-example/blob/main/.github/workflows/ci.yml#L16"
 	exit 1
 fi
+
+echo "[+] rm source .git directory to avoid conflicts when mirroring the root directory"
+rm -rf "$SOURCE_DIRECTORY/.git"
 
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $TARGET_DIRECTORY in git repo $DESTINATION_REPOSITORY_NAME"
 cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$TARGET_DIRECTORY"

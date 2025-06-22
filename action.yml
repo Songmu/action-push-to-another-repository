@@ -3,6 +3,9 @@ description: >-
   Useful to push files to another repository to be used, for example, via github
   pages
 inputs:
+  github-token:
+    description: 'Github token with write access to the destination repository'
+    required: true
   source-before-directory:
     description: Source before directory from the origin directory
     required: false
@@ -59,6 +62,7 @@ runs:
   - run: $GITHUB_ACTION_PATH/entrypoint.sh
     shell: bash
     env:
+      API_TOKEN_GITHUB: ${{ inputs.github-token }}
       SOURCE_BEFORE_DIRECTORY: ${{ inputs.source-before-directory }}
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
       DESTINATION_GITHUB_USERNAME: ${{ inputs.destination-github-username }}
