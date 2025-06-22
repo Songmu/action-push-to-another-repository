@@ -6,9 +6,6 @@ inputs:
   github-token:
     description: 'Github token with write access to the destination repository'
     required: true
-  source-before-directory:
-    description: Source before directory from the origin directory
-    required: false
   source-directory:
     description: Source directory from the origin directory
     required: true
@@ -63,7 +60,6 @@ runs:
     shell: bash
     env:
       API_TOKEN_GITHUB: ${{ inputs.github-token }}
-      SOURCE_BEFORE_DIRECTORY: ${{ inputs.source-before-directory }}
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
       DESTINATION_GITHUB_USERNAME: ${{ inputs.destination-github-username }}
       DESTINATION_REPOSITORY_NAME: ${{ inputs.destination-repository-name }}
