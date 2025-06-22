@@ -49,28 +49,28 @@ inputs:
     default: ''
     required: false
   create-target-branch-if-needed:
-    type: boolean
     description: >-
       [Optional] create target branch if not exist. Defaults to `false`
-    default: false
+    default: "false"
     required: false
-
 runs:
-  using: docker
-  image: Dockerfile
-  args:
-    - '${{ inputs.source-before-directory }}'
-    - '${{ inputs.source-directory }}'
-    - '${{ inputs.destination-github-username }}'
-    - '${{ inputs.destination-repository-name }}'
-    - '${{ inputs.github-server }}'
-    - '${{ inputs.user-email }}'
-    - '${{ inputs.user-name }}'
-    - '${{ inputs.destination-repository-username }}'
-    - '${{ inputs.target-branch }}'
-    - '${{ inputs.commit-message }}'
-    - '${{ inputs.target-directory }}'
-    - '${{ inputs.create-target-branch-if-needed }}'
+  using: composite
+  steps:
+  - run: $GITHUB_ACTION_PATH/entrypoint.sh
+    shell: bash
+    env:
+      SOURCE_BEFORE_DIRECTORY: ${{ inputs.source-before-directory }}
+      SOURCE_DIRECTORY: ${{ inputs.source-directory }}
+      DESTINATION_GITHUB_USERNAME: ${{ inputs.destination-github-username }}
+      DESTINATION_REPOSITORY_NAME: ${{ inputs.destination-repository-name }}
+      GITHUB_SERVER: ${{ inputs.github-server }}
+      USER_EMAIL: ${{ inputs.user-email }}
+      USER_NAME: ${{ inputs.user-name }}
+      DESTINATION_REPOSITORY_USERNAME: ${{ inputs.destination-repository-username }}
+      TARGET_BRANCH: ${{ inputs.target-branch }}
+      COMMIT_MESSAGE: ${{ inputs.commit-message }}
+      TARGET_DIRECTORY: ${{ inputs.target-directory }}
+      CREATE_TARGET_BRANCH_IF_NEEDED: ${{ inputs.create-target-branch-if-needed }}
 branding:
   icon: git-commit
   color: green
