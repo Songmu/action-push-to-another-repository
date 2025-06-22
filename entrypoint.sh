@@ -12,34 +12,7 @@ then
 	USER_NAME="$DESTINATION_GITHUB_USERNAME"
 fi
 
-# Verify that there (potentially) some access to the destination repository
-# and set up git (with GIT_CMD variable) and GIT_CMD_REPOSITORY
-if [ -n "${SSH_DEPLOY_KEY:=}" ]
-then
-	echo "[+] Using SSH_DEPLOY_KEY"
-
-	# Inspired by https://github.com/leigholiver/commit-with-deploy-key/blob/main/entrypoint.sh , thanks!
-	mkdir --parents "$HOME/.ssh"
-	DEPLOY_KEY_FILE="$HOME/.ssh/deploy_key"
-	echo "${SSH_DEPLOY_KEY}" > "$DEPLOY_KEY_FILE"
-	chmod 600 "$DEPLOY_KEY_FILE"
-
-	SSH_KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
-	ssh-keyscan -H "$GITHUB_SERVER" > "$SSH_KNOWN_HOSTS_FILE"
-
-	export GIT_SSH_COMMAND="ssh -i "$DEPLOY_KEY_FILE" -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_FILE"
-
-	GIT_CMD_REPOSITORY="git@$GITHUB_SERVER:$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
-
-elif [ -n "${API_TOKEN_GITHUB:=}" ]
-then
-	echo "[+] Using API_TOKEN_GITHUB"
-	GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
-else
-	echo "::error::API_TOKEN_GITHUB and SSH_DEPLOY_KEY are empty. Please fill one (recommended the SSH_DEPLOY_KEY)"
-	exit 1
-fi
-
+GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
 
 CLONE_DIR=$(mktemp -d)
 
