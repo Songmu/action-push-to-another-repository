@@ -2,17 +2,13 @@
 set -euo pipefail
 
 echo "[+] Action start"
-if [ -z "$DESTINATION_REPOSITORY_USERNAME" ]
-then
-	DESTINATION_REPOSITORY_USERNAME="$DESTINATION_GITHUB_USERNAME"
+OWNER="${GITHUB_REPOSITORY%%/*}"
+
+if [[ "$DESTINATION_REPOSITORY" != *"/"* ]]; then
+  REPO="$OWNER/$DESTINATION_REPOSITORY"
 fi
 
-if [ -z "$USER_NAME" ]
-then
-	USER_NAME="$DESTINATION_GITHUB_USERNAME"
-fi
-
-GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git"
+GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY.git"
 
 CLONE_DIR=$(mktemp -d)
 
@@ -22,7 +18,7 @@ git --version
 echo "[+] Enable git lfs"
 git lfs install
 
-echo "[+] Cloning destination git repository $DESTINATION_REPOSITORY_NAME"
+echo "[+] Cloning destination git repository $DESTINATION_REPOSITORY"
 
 # Setup git
 git config --global user.email "$USER_EMAIL"
@@ -81,7 +77,7 @@ ls "$SOURCE_DIRECTORY"
 echo "[+] rm source .git directory to avoid conflicts when mirroring the root directory"
 rm -rf "$SOURCE_DIRECTORY/.git"
 
-echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $TARGET_DIRECTORY in git repo $DESTINATION_REPOSITORY_NAME"
+echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $TARGET_DIRECTORY in git repo $DESTINATION_REPOSITORY"
 cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$TARGET_DIRECTORY"
 cd "$CLONE_DIR"
 

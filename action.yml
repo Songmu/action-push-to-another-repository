@@ -4,15 +4,12 @@ description: >-
   pages
 inputs:
   github-token:
-    description: 'Github token with write access to the destination repository'
+    description: Github token with write access to the destination repository
     required: true
   source-directory:
     description: Source directory from the origin directory
     required: true
-  destination-github-username:
-    description: Name of the destination username/organization
-    required: true
-  destination-repository-name:
+  destination-repository:
     description: Destination repository
     required: true
   user-email:
@@ -24,14 +21,9 @@ inputs:
     required: false
   user-name:
     description: >-
-      [Optional] Name for the git commit. Defaults to the destination
+      Name for the git commit. Defaults to the destination
       username/organization name
-    required: false
-    default: ''
-  destination-repository-username:
-    description: '[Optional] Username/organization for the destination repository'
-    required: false
-    default: ''
+    required: true
   target-branch:
     description: >-
       [Optional] set target branch name for the destination repository. Defaults
@@ -61,12 +53,10 @@ runs:
     env:
       API_TOKEN_GITHUB: ${{ inputs.github-token }}
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
-      DESTINATION_GITHUB_USERNAME: ${{ inputs.destination-github-username }}
-      DESTINATION_REPOSITORY_NAME: ${{ inputs.destination-repository-name }}
+      DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
       GITHUB_SERVER: ${{ inputs.github-server }}
       USER_EMAIL: ${{ inputs.user-email }}
       USER_NAME: ${{ inputs.user-name }}
-      DESTINATION_REPOSITORY_USERNAME: ${{ inputs.destination-repository-username }}
       TARGET_BRANCH: ${{ inputs.target-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       TARGET_DIRECTORY: ${{ inputs.target-directory }}
