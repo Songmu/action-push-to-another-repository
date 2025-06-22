@@ -122,6 +122,9 @@ then
 	exit 1
 fi
 
+echo "[+] rm source .git directory to avoid conflicts when mirroring the root directory"
+rm -rf "$SOURCE_DIRECTORY/.git"
+
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $TARGET_DIRECTORY in git repo $DESTINATION_REPOSITORY_NAME"
 cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$TARGET_DIRECTORY"
 cd "$CLONE_DIR"
