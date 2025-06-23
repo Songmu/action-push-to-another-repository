@@ -12,18 +12,10 @@ inputs:
   destination-repository:
     description: Destination repository
     required: true
-  user-email:
-    description: Email for the git commit
-    required: true
   github-server:
     description: 'Github server'
     default: 'github.com'
     required: false
-  user-name:
-    description: >-
-      Name for the git commit. Defaults to the destination
-      username/organization name
-    required: true
   target-branch:
     description: >-
       [Optional] set target branch name for the destination repository. Defaults
@@ -56,8 +48,6 @@ runs:
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
       DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
       GITHUB_SERVER: ${{ inputs.github-server }}
-      USER_EMAIL: ${{ inputs.user-email }}
-      USER_NAME: ${{ inputs.user-name }}
       TARGET_BRANCH: ${{ inputs.target-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       TARGET_DIRECTORY: ${{ inputs.target-directory }}

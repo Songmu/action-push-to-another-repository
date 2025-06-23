@@ -20,10 +20,6 @@ git lfs install
 
 echo "[+] Cloning destination git repository $DESTINATION_REPOSITORY"
 
-# Setup git
-git config --global user.email "$USER_EMAIL"
-git config --global user.name "$USER_NAME"
-
 # workaround for https://github.com/cpina/github-action-push-to-another-repository/issues/103
 git config --global http.version HTTP/1.1
 
@@ -87,10 +83,6 @@ ls -la
 ORIGIN_COMMIT="https://$GITHUB_SERVER/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/ORIGIN_COMMIT/$ORIGIN_COMMIT}"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/\$GITHUB_REF/$GITHUB_REF}"
-
-echo "[+] Set directory is safe ($CLONE_DIR)"
-# Related to https://github.com/cpina/github-action-push-to-another-repository/issues/64
-git config --global --add safe.directory "$CLONE_DIR"
 
 if [ "$CREATE_TARGET_BRANCH_IF_NEEDED" = "true" ]
 then
