@@ -2,6 +2,10 @@
 set -euo pipefail
 
 echo "[+] Action start"
+
+# we should get it before changing directory
+LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B --first-parent -- $SOURCE_DIRECTORY) || true
+
 GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY.git"
 
 CLONE_DIR=$(mktemp -d)
@@ -74,9 +78,10 @@ cd "$CLONE_DIR"
 echo "[+] Files that will be pushed"
 ls -la
 
+COMMIT_MESSAGE="${COMMIT_MESSAGE/LAST_COMMIT_MESSAGE/$LAST_COMMIT_MESSAGE}"
 ORIGIN_COMMIT="https://$GITHUB_SERVER/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/ORIGIN_COMMIT/$ORIGIN_COMMIT}"
-COMMIT_MESSAGE="${COMMIT_MESSAGE/\$GITHUB_REF/$GITHUB_REF}"
+COMMIT_MESSAGE="${COMMIT_MESSAGE/GITHUB_REF/$GITHUB_REF}"
 
 if [ "$CREATE_TARGET_BRANCH_IF_NEEDED" = "true" ]
 then
