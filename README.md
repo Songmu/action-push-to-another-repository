@@ -1,9 +1,11 @@
-# Push to Another Repository
+# action-push-to-another-repository
 
 A GitHub Action that pushes files from a source repository to a destination repository.
 
 > [!NOTE]
 > This is a maintained fork of the original [cpina/github-action-push-to-another-repository](https://github.com/cpina/github-action-push-to-another-repository) based on commit [7c1bd86](https://github.com/cpina/github-action-push-to-another-repository/commit/7c1bd869f38327ce403753fc2a5769e26cacb5ac).
+
+Latest version: v1.7.2
 
 ## Features
 - Push files from one repository to another
@@ -52,7 +54,7 @@ on:
     branches:
     - main
 jobs:
-  push-to-another-repo:
+  push-to-another-repository:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -82,5 +84,5 @@ jobs:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Original work Copyright (c) 2020 Carles Pina Estany
-Modified work Copyright (c) 2025 Masayuki Matsuki
+- Original work Copyright (c) 2020 Carles Pina Estany
+- Modified work Copyright (c) 2025 Masayuki Matsuki
