@@ -5,7 +5,7 @@ A GitHub Action that pushes files from a source repository to a destination repo
 > [!NOTE]
 > This is a maintained fork of the original [cpina/github-action-push-to-another-repository](https://github.com/cpina/github-action-push-to-another-repository) based on commit [7c1bd86](https://github.com/cpina/github-action-push-to-another-repository/commit/7c1bd869f38327ce403753fc2a5769e26cacb5ac).
 
-Latest version: v2.0.1
+Latest version: v2.0.2
 
 ## Features
 - Push files from one repository to another

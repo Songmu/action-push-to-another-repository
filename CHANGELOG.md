@@ -1,5 +1,8 @@
 # Changelog
 
+## [v2.0.2](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.1...v2.0.2) - 2025-06-23
+- [bugfix] fix way to output commit message by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/16
+
 ## [v2.0.1](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.0...v2.0.1) - 2025-06-23
 - clean changelog by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/13
 - [bugfix] fix evacuating git directory by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/15
