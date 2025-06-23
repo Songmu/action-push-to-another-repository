@@ -40,7 +40,7 @@ ls "$SOURCE_DIRECTORY"
 echo "[+] evacuate source .git directory to avoid conflicts when mirroring the root directory"
 mv "$SOURCE_DIRECTORY/.git" "$TEMP_WORKDIR/.git"
 
-echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $DESTINATION_DIRECTORY in git repo $DESTINATION_REPOSITORY"
+echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $DESTINATION_DIRECTORY in destination repository"
 cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$DESTINATION_DIRECTORY"
 cd "$CLONE_DIR"
 
