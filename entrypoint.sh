@@ -2,12 +2,6 @@
 set -euo pipefail
 
 echo "[+] Action start"
-OWNER="${GITHUB_REPOSITORY%%/*}"
-
-if [[ "$DESTINATION_REPOSITORY" != *"/"* ]]; then
-  DESTINATION_REPOSITORY="$OWNER/$DESTINATION_REPOSITORY"
-fi
-
 GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY.git"
 
 CLONE_DIR=$(mktemp -d)
@@ -98,4 +92,3 @@ rm -rf "$GITHUB_WORKSPACE"
 mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
 
 echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
-echo "destination-repository=$DESTINATION_REPOSITORY" >> "$GITHUB_OUTPUT"

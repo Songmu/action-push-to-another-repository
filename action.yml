@@ -55,7 +55,7 @@ runs:
   - uses: suzuki-shunsuke/commit-action@v0.0.8
     with:
       github_token: ${{ inputs.github-token }}
-      repository: ${{ steps.prepare.outputs.destination-repository }}
+      repository: ${{ inputs.destination-repository }}
       commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.target-branch }}
 branding:
