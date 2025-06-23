@@ -6,7 +6,6 @@ echo "[+] Action start"
 # we should get it before changing directory
 LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B --first-parent -- $SOURCE_DIRECTORY) || true
 
-WORKTREE_DIR=".push-to-another-repository"
 CLONE_DIR=$(mktemp -d)/$WORKTREE_DIR
 mv ./$WORKTREE_DIR "$CLONE_DIR"
 
