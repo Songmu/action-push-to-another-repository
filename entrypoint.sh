@@ -88,6 +88,7 @@ then
     git switch -c "$TARGET_BRANCH" || true
 fi
 
+echo "[+] Swap github.workspace with the cloned repository"
 rm -rf "$GITHUB_WORKSPACE"
 mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
 
