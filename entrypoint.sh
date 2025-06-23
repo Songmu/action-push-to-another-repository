@@ -10,7 +10,7 @@ fi
 
 GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY.git"
 
-CLONE_DIR=$(mktemp -d)
+CLONE_DIR="$(pwd)/.push-to-another-repository"
 
 echo "[+] Git version"
 git --version
@@ -103,4 +103,3 @@ then
 fi
 
 echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
-echo "working-directory=$CLONE_DIR" >> "$GITHUB_OUTPUT"
