@@ -2,7 +2,8 @@ name: Push directory to another repository
 description: >-
   Push files from one repository to another. Perfect for GitHub Pages deployment,
   documentation sync, mirror repositories, and automated file distribution.
-  Supports custom commit messages and flexible directory mapping.
+  Supports custom commit messages, flexible directory mapping, and creates signed
+  commits when using GitHub App tokens.
 inputs:
   github-token:
     description: Github token with write access to the destination repository

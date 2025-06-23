@@ -10,6 +10,7 @@ A GitHub Action that pushes files from a source repository to a destination repo
 - Configurable source and destination directories
 - Custom commit messages with template variables
 - Support for different destination branches
+- Creates signed commits when using GitHub App tokens
 
 ## Usage
 
