@@ -6,40 +6,9 @@ echo "[+] Action start"
 # we should get it before changing directory
 LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B --first-parent -- $SOURCE_DIRECTORY) || true
 
-GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY.git"
+CLONE_DIR=$(mktemp -d)/.push-to-another-repository
+mv ./.push-to-another-repository "$CLONE_DIR"
 
-CLONE_DIR=$(mktemp -d)
-
-echo "[+] Git version"
-git --version
-
-echo "[+] Enable git lfs"
-git lfs install
-
-echo "[+] Cloning destination git repository $DESTINATION_REPOSITORY"
-
-# workaround for https://github.com/cpina/github-action-push-to-another-repository/issues/103
-git config --global http.version HTTP/1.1
-
-{
-	git clone --single-branch --depth 1 --branch "$TARGET_BRANCH" "$GIT_CMD_REPOSITORY" "$CLONE_DIR"
-} || {
-    if [ "$CREATE_TARGET_BRANCH_IF_NEEDED" = "true" ]
-    then
-        # Default branch of the repository is cloned. Later on the required branch
-	# will be created
-        git clone --single-branch --depth 1 "$GIT_CMD_REPOSITORY" "$CLONE_DIR"
-    else
-        false
-    fi
-} || {
-	echo "::error::Could not clone the destination repository. Command:"
-	echo "::error::git clone --single-branch --branch $TARGET_BRANCH $GIT_CMD_REPOSITORY $CLONE_DIR"
-	echo "::error::(Note that if they exist USER_NAME and API_TOKEN is redacted by GitHub)"
-	echo "::error::Please verify that the target repository exist AND that it contains the destination branch name, and is accesible by the API_TOKEN_GITHUB OR SSH_DEPLOY_KEY"
-	exit 1
-
-}
 ls -la "$CLONE_DIR"
 
 TEMP_DIR=$(mktemp -d)
@@ -79,19 +48,9 @@ echo "[+] Files that will be pushed"
 ls -la
 
 COMMIT_MESSAGE="${COMMIT_MESSAGE/LAST_COMMIT_MESSAGE/$LAST_COMMIT_MESSAGE}"
-ORIGIN_COMMIT="https://$GITHUB_SERVER/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
+ORIGIN_COMMIT="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/ORIGIN_COMMIT/$ORIGIN_COMMIT}"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/GITHUB_REF/$GITHUB_REF}"
-
-if [ "$CREATE_TARGET_BRANCH_IF_NEEDED" = "true" ]
-then
-    echo "[+] Switch to the TARGET_BRANCH"
-    # || true: if the $TARGET_BRANCH already existed in the destination repo:
-    # it is already the current branch and it cannot be switched to
-    # (it's not needed)
-    # If the branch did not exist: it switches (creating) the branch
-    git switch -c "$TARGET_BRANCH" || true
-fi
 
 echo "[+] Swap github.workspace with the cloned repository"
 rm -rf "$GITHUB_WORKSPACE"
