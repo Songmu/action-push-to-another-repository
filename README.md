@@ -1,9 +1,85 @@
-# github-action-push-to-another-repository
+# Push to Another Repository
 
-> **Note**: This is a maintained fork of the original [cpina/github-action-push-to-another-repository](https://github.com/cpina/github-action-push-to-another-repository) based on commit [7c1bd86](https://github.com/cpina/github-action-push-to-another-repository/commit/7c1bd869f38327ce403753fc2a5769e26cacb5ac) from the original repository.
+A GitHub Action that pushes files from a source repository to a destination repository.
 
-## Original Documentation
+> [!NOTE]
+> This is a maintained fork of the original [cpina/github-action-push-to-another-repository](https://github.com/cpina/github-action-push-to-another-repository) based on commit [7c1bd86](https://github.com/cpina/github-action-push-to-another-repository/commit/7c1bd869f38327ce403753fc2a5769e26cacb5ac).
 
-See the extensive documentation in https://cpina.github.io/push-to-another-repository-docs/ (includes examples, FAQ, troubleshooting, etc.).
+## Features
+- Push files from one repository to another
+- Configurable source and destination directories
+- Custom commit messages with template variables
+- Support for different destination branches
 
-GitHub repository of the documentation: https://github.com/cpina/push-to-another-repository-docs
+## Usage
+
+```yaml
+- name: Push to another repository
+  uses: Songmu/action-push-to-another-repository@v2
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    destination-repository: 'owner/repo'
+```
+
+## Inputs
+
+| Name | Description | Required | Default |
+|------|-------------|----------|---------|
+| `github-token` | GitHub token with write access to the destination repository | Yes | - |
+| `destination-repository` | Destination repository (format: `owner/repo`) | Yes | - |
+| `source-directory` | Source directory from the origin directory | No | `.` |
+| `destination-branch` | Destination branch name for the destination repository | No | `main` |
+| `commit-message` | Commit message for the output repository | No | `LAST_COMMIT_MESSAGE (via ORIGIN_COMMIT from GITHUB_REF)` |
+| `destination-directory` | The directory to wipe and replace in the destination repository | No | `''` |
+
+### Commit Message Variables
+
+The `commit-message` input supports the following template variables:
+
+- `LAST_COMMIT_MESSAGE`: Replaced by the last commit message in the source repository
+- `ORIGIN_COMMIT`: Replaced by the URL@commit in the origin repository
+- `GITHUB_REF`: Replaced by the origin `$GITHUB_REF`
+
+## Example
+
+### Basic Usage
+
+```yaml
+name: Push to another repository
+on:
+  push:
+    branches:
+    - main
+jobs:
+  push-to-another-repo:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - id: generate_token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ secrets.APP_ID }}
+        private-key: ${{ secrets.PRIVATE_KEY }}
+        repositories: dest-repo
+    - name: Push to another repository
+      uses: Songmu/action-push-to-another-repository@v2
+      with:
+        github-token: "${{ steps.generate_token.outputs.token }}"
+        destination-repository: 'owner/dest-repo'
+```
+
+## How it Works
+1. The action checks out the destination repository
+2. Copies files from the source directory to the destination
+3. Creates a commit with the specified message
+4. Pushes the changes to the destination repository
+
+## Requirements
+- The `github-token` must have write access to the destination repository
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Original work Copyright (c) 2020 Carles Pina Estany
+Modified work Copyright (c) 2025 Masayuki Matsuki
