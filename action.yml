@@ -24,9 +24,10 @@ inputs:
     required: false
   commit-message:
     description: >-
-      [Optional] commit message for the output repository. ORIGIN_COMMIT is
-      replaced by the URL@commit in the origin repo
-    default: Update from ORIGIN_COMMIT
+      [Optional] commit message for the output repository.
+      LAST_COMMIT_MESSAGE is replaced by the last commit message in the source repo
+      ORIGIN_COMMIT is replaced by the URL@commit in the origin repo
+    default: 'LAST_COMMIT_MESSAGE (via ORIGIN_COMMIT from GITHUB_REF)'
     required: false
   target-directory:
     description: '[Optional] The directory to wipe and replace in the target repository'
