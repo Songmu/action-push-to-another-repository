@@ -45,10 +45,7 @@ runs:
     run: $GITHUB_ACTION_PATH/entrypoint.sh
     shell: bash
     env:
-      API_TOKEN_GITHUB: ${{ inputs.github-token }}
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
-      DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
-      DESTINATION_BRANCH: ${{ inputs.destination-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       DESTINATION_DIRECTORY: ${{ inputs.destination-directory }}
       WORKTREE_DIR: .push-to-another-repository
