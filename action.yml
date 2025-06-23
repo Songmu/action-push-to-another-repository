@@ -27,6 +27,7 @@ inputs:
       [Optional] commit message for the output repository.
       LAST_COMMIT_MESSAGE is replaced by the last commit message in the source repo
       ORIGIN_COMMIT is replaced by the URL@commit in the origin repo
+      GIT_REF is replaced by the origin $GIT_REF
     default: 'LAST_COMMIT_MESSAGE (via ORIGIN_COMMIT from GITHUB_REF)'
     required: false
   target-directory:
