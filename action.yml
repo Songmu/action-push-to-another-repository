@@ -12,10 +12,6 @@ inputs:
   destination-repository:
     description: Destination repository
     required: true
-  github-server:
-    description: 'Github server'
-    default: 'github.com'
-    required: false
   target-branch:
     description: >-
       [Optional] set target branch name for the destination repository. Defaults
@@ -51,7 +47,6 @@ runs:
       API_TOKEN_GITHUB: ${{ inputs.github-token }}
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
       DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
-      GITHUB_SERVER: ${{ inputs.github-server }}
       TARGET_BRANCH: ${{ inputs.target-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       TARGET_DIRECTORY: ${{ inputs.target-directory }}
