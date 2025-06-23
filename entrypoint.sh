@@ -2,12 +2,6 @@
 set -euo pipefail
 
 echo "[+] Action start"
-OWNER="${GITHUB_REPOSITORY%%/*}"
-
-if [[ "$DESTINATION_REPOSITORY" != *"/"* ]]; then
-  DESTINATION_REPOSITORY="$OWNER/$DESTINATION_REPOSITORY"
-fi
-
 GIT_CMD_REPOSITORY="https://x-access-token:$API_TOKEN_GITHUB@$GITHUB_SERVER/$DESTINATION_REPOSITORY.git"
 
 CLONE_DIR=$(mktemp -d)
@@ -19,10 +13,6 @@ echo "[+] Enable git lfs"
 git lfs install
 
 echo "[+] Cloning destination git repository $DESTINATION_REPOSITORY"
-
-# Setup git
-git config --global user.email "$USER_EMAIL"
-git config --global user.name "$USER_NAME"
 
 # workaround for https://github.com/cpina/github-action-push-to-another-repository/issues/103
 git config --global http.version HTTP/1.1
@@ -88,10 +78,6 @@ ORIGIN_COMMIT="https://$GITHUB_SERVER/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/ORIGIN_COMMIT/$ORIGIN_COMMIT}"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/\$GITHUB_REF/$GITHUB_REF}"
 
-echo "[+] Set directory is safe ($CLONE_DIR)"
-# Related to https://github.com/cpina/github-action-push-to-another-repository/issues/64
-git config --global --add safe.directory "$CLONE_DIR"
-
 if [ "$CREATE_TARGET_BRANCH_IF_NEEDED" = "true" ]
 then
     echo "[+] Switch to the TARGET_BRANCH"
@@ -102,16 +88,8 @@ then
     git switch -c "$TARGET_BRANCH" || true
 fi
 
-echo "[+] Adding git commit"
-git add .
+echo "[+] Swap github.workspace with the cloned repository"
+rm -rf "$GITHUB_WORKSPACE"
+mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
 
-echo "[+] git status:"
-git status
-
-echo "[+] git diff-index:"
-# git diff-index : to avoid doing the git commit failing if there are no changes to be commit
-git diff-index --quiet HEAD || git commit --message "$COMMIT_MESSAGE"
-
-echo "[+] Pushing git commit"
-# --set-upstream: sets de branch when pushing to a branch that does not exist
-git push "$GIT_CMD_REPOSITORY" --set-upstream "$TARGET_BRANCH"
+echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"

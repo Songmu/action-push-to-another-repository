@@ -12,18 +12,10 @@ inputs:
   destination-repository:
     description: Destination repository
     required: true
-  user-email:
-    description: Email for the git commit
-    required: true
   github-server:
     description: 'Github server'
     default: 'github.com'
     required: false
-  user-name:
-    description: >-
-      Name for the git commit. Defaults to the destination
-      username/organization name
-    required: true
   target-branch:
     description: >-
       [Optional] set target branch name for the destination repository. Defaults
@@ -48,19 +40,24 @@ inputs:
 runs:
   using: composite
   steps:
-  - run: $GITHUB_ACTION_PATH/entrypoint.sh
+  - id: prepare
+    run: $GITHUB_ACTION_PATH/entrypoint.sh
     shell: bash
     env:
       API_TOKEN_GITHUB: ${{ inputs.github-token }}
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
       DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
       GITHUB_SERVER: ${{ inputs.github-server }}
-      USER_EMAIL: ${{ inputs.user-email }}
-      USER_NAME: ${{ inputs.user-name }}
       TARGET_BRANCH: ${{ inputs.target-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       TARGET_DIRECTORY: ${{ inputs.target-directory }}
       CREATE_TARGET_BRANCH_IF_NEEDED: ${{ inputs.create-target-branch-if-needed }}
+  - uses: suzuki-shunsuke/commit-action@v0.0.8
+    with:
+      github_token: ${{ inputs.github-token }}
+      repository: ${{ inputs.destination-repository }}
+      commit_message: ${{ steps.prepare.outputs.commit-message }}
+      branch: ${{ inputs.target-branch }}
 branding:
   icon: git-commit
   color: green
