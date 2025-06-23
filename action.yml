@@ -6,12 +6,13 @@ inputs:
   github-token:
     description: Github token with write access to the destination repository
     required: true
-  source-directory:
-    description: Source directory from the origin directory
-    required: true
   destination-repository:
     description: Destination repository
     required: true
+  source-directory:
+    description: '[Optional] Source directory from the origin directory'
+    default: '.'
+    required: false
   destination-branch:
     description: >-
       [Optional] set destination branch name for the destination repository. Defaults
