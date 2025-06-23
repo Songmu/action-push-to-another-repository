@@ -58,6 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      persist-credentials: false
     - id: generate_token
       uses: actions/create-github-app-token@v1
       with:
