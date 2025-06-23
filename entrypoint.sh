@@ -106,3 +106,4 @@ rm -rf "$GITHUB_WORKSPACE"
 mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
 
 echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
+echo "destination-repository=$DESTINATION_REPOSITORY" >> "$GITHUB_OUTPUT"

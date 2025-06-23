@@ -64,9 +64,9 @@ runs:
       CREATE_TARGET_BRANCH_IF_NEEDED: ${{ inputs.create-target-branch-if-needed }}
   - uses: suzuki-shunsuke/commit-action@v0.0.8
     with:
-      github-token: ${{ inputs.github-token }}
-      repository: ${{ inputs.destination-repository }}
-      commit-message: ${{ steps.prepare.outputs.commit-message }}
+      github_token: ${{ inputs.github-token }}
+      repository: ${{ steps.prepare.outputs.destination-repository }}
+      commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.target-branch }}
 branding:
   icon: git-commit
