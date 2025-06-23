@@ -6,16 +6,17 @@ echo "[+] Action start"
 # we should get it before changing directory
 LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B --first-parent -- $SOURCE_DIRECTORY) || true
 
-CLONE_DIR=$(mktemp -d)/.push-to-another-repository
-mv ./.push-to-another-repository "$CLONE_DIR"
+WORKTREE_DIR=".push-to-another-repository"
+CLONE_DIR=$(mktemp -d)/$WORKTREE_DIR
+mv ./$WORKTREE_DIR "$CLONE_DIR"
 
 ls -la "$CLONE_DIR"
 
-TEMP_DIR=$(mktemp -d)
+TEMP_WORKDIR=$(mktemp -d)
 # This mv has been the easier way to be able to remove files that were there
 # but not anymore. Otherwise we had to remove the files from "$CLONE_DIR",
 # including "." and with the exception of ".git/"
-mv "$CLONE_DIR/.git" "$TEMP_DIR/.git"
+mv "$CLONE_DIR/.git" "$TEMP_WORKDIR/.git"
 
 # $DESTINATION_DIRECTORY is '' by default
 ABSOLUTE_DESTINATION_DIRECTORY="$CLONE_DIR/$DESTINATION_DIRECTORY/"
@@ -32,13 +33,13 @@ ls -al
 echo "[+] Listing root Location"
 ls -al /
 
-mv "$TEMP_DIR/.git" "$CLONE_DIR/.git"
+mv "$TEMP_WORKDIR/.git" "$CLONE_DIR/.git"
 
 echo "[+] List contents of $SOURCE_DIRECTORY"
 ls "$SOURCE_DIRECTORY"
 
-echo "[+] rm source .git directory to avoid conflicts when mirroring the root directory"
-rm -rf "$SOURCE_DIRECTORY/.git"
+echo "[+] evacuate source .git directory to avoid conflicts when mirroring the root directory"
+mv "$SOURCE_DIRECTORY/.git" "$TEMP_WORKDIR/.git"
 
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $DESTINATION_DIRECTORY in git repo $DESTINATION_REPOSITORY"
 cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$DESTINATION_DIRECTORY"
@@ -51,9 +52,12 @@ COMMIT_MESSAGE="${COMMIT_MESSAGE/LAST_COMMIT_MESSAGE/$LAST_COMMIT_MESSAGE}"
 ORIGIN_COMMIT="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/ORIGIN_COMMIT/$ORIGIN_COMMIT}"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/GITHUB_REF/$GITHUB_REF}"
+echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
 
 echo "[+] Swap github.workspace with the cloned repository"
-rm -rf "$GITHUB_WORKSPACE"
+mv "$GITHUB_WORKSPACE" "$TEMP_WORKDIR/$WORKTREE_DIR"
+mv "$TEMP_WORKDIR/.git" "$TEMP_WORKDIR/$WORKTREE_DIR/.git"
 mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
 
-echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
+cd "$GITHUB_WORKSPACE"
+echo "$WORKTREE_DIR" >> .git/info/exclude
