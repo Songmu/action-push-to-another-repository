@@ -102,5 +102,7 @@ then
     git switch -c "$TARGET_BRANCH" || true
 fi
 
+rm -rf "$GITHUB_WORKSPACE"
+mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
+
 echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
-echo "working-directory=$CLONE_DIR" >> "$GITHUB_OUTPUT"

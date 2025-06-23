@@ -63,7 +63,6 @@ runs:
       TARGET_DIRECTORY: ${{ inputs.target-directory }}
       CREATE_TARGET_BRANCH_IF_NEEDED: ${{ inputs.create-target-branch-if-needed }}
   - uses: suzuki-shunsuke/commit-action@v0.0.8
-    working-directory: ${{ steps.prepare.outputs.working-directory }}
     with:
       github-token: ${{ inputs.github-token }}
       repository: ${{ inputs.destination-repository }}
