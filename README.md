@@ -78,7 +78,18 @@ jobs:
 4. Pushes the changes to the destination repository
 
 ## Requirements
-- The `github-token` must have write access to the destination repository
+
+### Permissions
+
+This action requires the following permissions:
+
+**Source Repository (where the workflow runs):**
+- `contents: read` - Read files from the source repository
+- `metadata: read` - Access commit history
+
+**Destination Repository (where files are pushed):**
+- `contents: write` - Write files and create commits
+- `workflows: write` - Only needed if updating `.github/workflows/` files
 
 ## License
 
