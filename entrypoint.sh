@@ -102,16 +102,5 @@ then
     git switch -c "$TARGET_BRANCH" || true
 fi
 
-echo "[+] Adding git commit"
-git add .
-
-echo "[+] git status:"
-git status
-
-echo "[+] git diff-index:"
-# git diff-index : to avoid doing the git commit failing if there are no changes to be commit
-git diff-index --quiet HEAD || git commit --message "$COMMIT_MESSAGE"
-
-echo "[+] Pushing git commit"
-# --set-upstream: sets de branch when pushing to a branch that does not exist
-git push "$GIT_CMD_REPOSITORY" --set-upstream "$TARGET_BRANCH"
+echo "commit-message=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
+echo "working-directory=$CLONE_DIR" >> "$GITHUB_OUTPUT"
