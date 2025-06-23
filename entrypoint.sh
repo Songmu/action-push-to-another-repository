@@ -25,7 +25,7 @@ mkdir -p "$ABSOLUTE_DESTINATION_DIRECTORY"
 mv "$TEMP_WORKDIR/.git" "$CLONE_DIR/.git"
 
 echo "[+] evacuate source .git directory to avoid conflicts when mirroring the root directory"
-mv "$SOURCE_DIRECTORY/.git" "$TEMP_WORKDIR/.git"
+mv "$GITHUB_WORKSPACE/.git" "$TEMP_WORKDIR/.git"
 
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $DESTINATION_DIRECTORY in destination repository"
 cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$DESTINATION_DIRECTORY"
