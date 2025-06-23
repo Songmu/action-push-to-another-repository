@@ -58,6 +58,7 @@ echo "[+] Swap github.workspace with the cloned repository"
 mv "$GITHUB_WORKSPACE" "$TEMP_WORKDIR/$WORKTREE_DIR"
 mv "$TEMP_WORKDIR/.git" "$TEMP_WORKDIR/$WORKTREE_DIR/.git"
 mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
+mv "$TEMP_WORKDIR/$WORKTREE_DIR" "$GITHUB_WORKSPACE/$WORKTREE_DIR"
 
 cd "$GITHUB_WORKSPACE"
 echo "$WORKTREE_DIR" >> .git/info/exclude

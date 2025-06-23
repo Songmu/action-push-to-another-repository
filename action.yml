@@ -56,6 +56,14 @@ runs:
       repository: ${{ inputs.destination-repository }}
       commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.destination-branch }}
+  - name: restore origin
+    run: |
+      WORKTREE_DIR=".push-to-another-repository"
+      TEMP_DIR="$(mktemp -d)/$WORKTREE_DIR"
+      mv ./$WORKTREE_DIR "$TEMP_DIR"
+      rm -rf "$GITHUB_WORKSPACE"
+      mv "$TEMP_DIR" $GITHUB_WORKSPACE
+    shell: bash
 branding:
   icon: git-commit
   color: green
