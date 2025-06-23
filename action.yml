@@ -50,12 +50,21 @@ runs:
       DESTINATION_BRANCH: ${{ inputs.destination-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       DESTINATION_DIRECTORY: ${{ inputs.destination-directory }}
+      WORKTREE_DIR: .push-to-another-repository
   - uses: suzuki-shunsuke/commit-action@v0.0.8
     with:
       github_token: ${{ inputs.github-token }}
       repository: ${{ inputs.destination-repository }}
       commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.destination-branch }}
+  - name: restore origin
+    run: |
+      WORKTREE_DIR=".push-to-another-repository"
+      TEMP_DIR="$(mktemp -d)/$WORKTREE_DIR"
+      mv ./$WORKTREE_DIR "$TEMP_DIR"
+      rm -rf "$GITHUB_WORKSPACE"
+      mv "$TEMP_DIR" $GITHUB_WORKSPACE
+    shell: bash
 branding:
   icon: git-commit
   color: green
