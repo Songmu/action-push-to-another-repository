@@ -12,9 +12,9 @@ inputs:
   destination-repository:
     description: Destination repository
     required: true
-  target-branch:
+  destination-branch:
     description: >-
-      [Optional] set target branch name for the destination repository. Defaults
+      [Optional] set destination branch name for the destination repository. Defaults
       to "main"
     default: main
     required: false
@@ -26,8 +26,8 @@ inputs:
       GIT_REF is replaced by the origin $GIT_REF
     default: 'LAST_COMMIT_MESSAGE (via ORIGIN_COMMIT from GITHUB_REF)'
     required: false
-  target-directory:
-    description: '[Optional] The directory to wipe and replace in the target repository'
+  destination-directory:
+    description: '[Optional] The directory to wipe and replace in the destination repository'
     default: ''
     required: false
 runs:
@@ -38,7 +38,7 @@ runs:
     with:
       repository: ${{ inputs.destination-repository }}
       token: ${{ inputs.github-token }}
-      ref: ${{ inputs.target-branch }}
+      ref: ${{ inputs.destination-branch }}
       path: .push-to-another-repository
   - id: prepare
     run: $GITHUB_ACTION_PATH/entrypoint.sh
@@ -47,15 +47,15 @@ runs:
       API_TOKEN_GITHUB: ${{ inputs.github-token }}
       SOURCE_DIRECTORY: ${{ inputs.source-directory }}
       DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
-      TARGET_BRANCH: ${{ inputs.target-branch }}
+      DESTINATION_BRANCH: ${{ inputs.destination-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
-      TARGET_DIRECTORY: ${{ inputs.target-directory }}
+      DESTINATION_DIRECTORY: ${{ inputs.destination-directory }}
   - uses: suzuki-shunsuke/commit-action@v0.0.8
     with:
       github_token: ${{ inputs.github-token }}
       repository: ${{ inputs.destination-repository }}
       commit_message: ${{ steps.prepare.outputs.commit-message }}
-      branch: ${{ inputs.target-branch }}
+      branch: ${{ inputs.destination-branch }}
 branding:
   icon: git-commit
   color: green
