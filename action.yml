@@ -34,14 +34,16 @@ inputs:
     description: '[Optional] The directory to wipe and replace in the target repository'
     default: ''
     required: false
-  create-target-branch-if-needed:
-    description: >-
-      [Optional] create target branch if not exist. Defaults to `false`
-    default: "false"
-    required: false
 runs:
   using: composite
   steps:
+  - name: Checkout source repository
+    uses: actions/checkout@v4
+    with:
+      repository: ${{ inputs.destination-repository }}
+      token: ${{ inputs.github-token }}
+      ref: ${{ inputs.target-branch }}
+      path: .push-to-another-repository
   - id: prepare
     run: $GITHUB_ACTION_PATH/entrypoint.sh
     shell: bash
@@ -53,7 +55,6 @@ runs:
       TARGET_BRANCH: ${{ inputs.target-branch }}
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       TARGET_DIRECTORY: ${{ inputs.target-directory }}
-      CREATE_TARGET_BRANCH_IF_NEEDED: ${{ inputs.create-target-branch-if-needed }}
   - uses: suzuki-shunsuke/commit-action@v0.0.8
     with:
       github_token: ${{ inputs.github-token }}
