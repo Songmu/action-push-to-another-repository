@@ -72,6 +72,32 @@ jobs:
         destination-repository: 'owner/dest-repo'
 ```
 
+### Pull From Another Repository
+
+You can also use this action to pull files from another repository and push them to your own repository. This is useful for syncing files or configurations across repositories.
+
+```yaml
+name: Pull from another repository
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+jobs:
+  push-to-another-repository:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      repo: '$owner/$source-another-repo'
+      persist-credentials: false
+    - name: Push to another repository
+      uses: Songmu/action-push-to-another-repository@v2
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+        destination-repository: '$you/$yourepo'
+        source-directory: './src'
+        destination-directory: 'vendor/another-repo'
+```
+
 ## How it Works
 1. The action checks out the destination repository
 2. Copies files from the source directory to the destination
@@ -86,7 +112,6 @@ This action requires the following permissions:
 
 **Source Repository (where the workflow runs):**
 - `contents: read` - Read files from the source repository
-- `metadata: read` - Access commit history
 
 **Destination Repository (where files are pushed):**
 - `contents: write` - Write files and create commits
