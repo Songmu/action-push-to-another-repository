@@ -1,4 +1,4 @@
-name: Songmu/action-push-to-another-repository
+name: Push to Another Repository with a Signed Commit
 description: >-
   Push files to another repository. Ideal for GitHub Pages, docs sync, and
   mirrors. Creates signed commits with App tokens.
