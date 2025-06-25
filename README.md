@@ -20,7 +20,6 @@ Latest version: v2.0.3
 - name: Push to another repository
   uses: Songmu/action-push-to-another-repository@v2
   with:
-    token: ${{ secrets.GITHUB_TOKEN }}
     destination-repository: 'owner/repo'
 ```
 
@@ -28,7 +27,7 @@ Latest version: v2.0.3
 
 | Name | Description | Required | Default |
 |------|-------------|----------|---------|
-| `token` | GitHub token with write access to the destination repository | Yes | - |
+| `token` | GitHub token with write access to the destination repository | No | `${{ github.token }}` |
 | `destination-repository` | Destination repository (format: `owner/repo`) | Yes | - |
 | `source-directory` | Source directory from the origin directory | No | `.` |
 | `destination-branch` | Destination branch name for the destination repository | No | `main` |

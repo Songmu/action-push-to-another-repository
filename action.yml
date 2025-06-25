@@ -5,7 +5,8 @@ description: >-
 inputs:
   token:
     description: Github token with write access to the destination repository
-    required: true
+    required: false
+    default: ${{ github.token }}
   destination-repository:
     description: Destination repository
     required: true
