@@ -39,14 +39,16 @@ outputs:
 runs:
   using: composite
   steps:
-  - name: Checkout source repository
+  - name: Checkout destination repository into a worktree
     uses: actions/checkout@v4
     with:
       repository: ${{ inputs.destination-repository }}
       token: ${{ inputs.token }}
       ref: ${{ inputs.destination-branch }}
+      persist-credentials: false
       path: .push-to-another-repository
   - id: prepare
+    name: "Prepare the destination repository in the workspace before committing"
     run: $GITHUB_ACTION_PATH/entrypoint.sh
     shell: bash
     env:
@@ -61,14 +63,15 @@ runs:
       repository: ${{ inputs.destination-repository }}
       commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.destination-branch }}
-  - name: restore origin
+  - name: restore stashed original workspace from worktree
     run: |
-      WORKTREE_DIR=".push-to-another-repository"
       TEMP_DIR="$(mktemp -d)/$WORKTREE_DIR"
       mv ./$WORKTREE_DIR "$TEMP_DIR"
       rm -rf "$GITHUB_WORKSPACE"
-      mv "$TEMP_DIR" $GITHUB_WORKSPACE
+      mv "$TEMP_DIR" "$GITHUB_WORKSPACE"
     shell: bash
+    env:
+      WORKTREE_DIR: .push-to-another-repository
 branding:
   icon: git-commit
   color: green

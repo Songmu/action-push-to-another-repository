@@ -42,13 +42,13 @@ COMMIT_MESSAGE="${COMMIT_MESSAGE/GITHUB_REF/$GITHUB_REF}"
   echo 'EOF'
 } >> "$GITHUB_OUTPUT"
 
-echo "[+] Swap github.workspace with the cloned repository"
+echo "[+] Swap github.workspace with the cloned repository to work with commit-action"
 mv "$GITHUB_WORKSPACE" "$TEMP_WORKDIR/$WORKTREE_DIR"
 mv "$TEMP_WORKDIR/.git" "$TEMP_WORKDIR/$WORKTREE_DIR/.git"
 mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
-# Keep the original repository in a sub directory as worktree.
-mv "$TEMP_WORKDIR/$WORKTREE_DIR" "$GITHUB_WORKSPACE/$WORKTREE_DIR"
 
+# Stash the original workspace in a ignored worktree directory.
+mv "$TEMP_WORKDIR/$WORKTREE_DIR" "$GITHUB_WORKSPACE/$WORKTREE_DIR"
 cd "$GITHUB_WORKSPACE"
-# The worktree directory is ignored from version control.
+# The stash directory is ignored from version control.
 echo "$WORKTREE_DIR" >> .git/info/exclude
