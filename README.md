@@ -121,6 +121,25 @@ jobs:
 
 ## Requirements
 
+### Branch Requirements
+
+This action requires the destination branch to already exist in the destination repository. If the branch doesn't exist, the action will fail.
+
+To create a new branch before using this action, use [`Songmu/action-create-branch`](https://github.com/Songmu/action-create-branch):
+
+```yaml
+- name: Create branch if needed
+  uses: Songmu/action-create-branch@v0
+  with:
+    repository: 'owner/dest-repo'
+    branch: 'new-branch'
+- name: Push to another repository
+  uses: Songmu/action-push-to-another-repository@v2
+  with:
+    destination-repository: 'owner/dest-repo'
+    destination-branch: 'new-branch'
+```
+
 ### Permissions
 
 - `contents: write` - Write files and create commits
