@@ -1,5 +1,8 @@
 # Changelog
 
+## [v2.0.6](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.5...v2.0.6) - 2025-06-25
+- set persist-credentials false in action.yml by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/29
+
 ## [v2.0.5](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.4...v2.0.5) - 2025-06-25
 - add outputs.pushed by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/26
 - add Branch Requirements section to README by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/28
