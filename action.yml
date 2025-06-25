@@ -32,6 +32,10 @@ inputs:
     description: '[Optional] The directory to wipe and replace in the destination repository'
     default: ''
     required: false
+outputs:
+  pushed:
+    description: 'Whether a commit was pushed to the destination repository'
+    value: ${{ steps.commit.outputs.pushed }}
 runs:
   using: composite
   steps:
@@ -50,7 +54,8 @@ runs:
       COMMIT_MESSAGE: ${{ inputs.commit-message }}
       DESTINATION_DIRECTORY: ${{ inputs.destination-directory }}
       WORKTREE_DIR: .push-to-another-repository
-  - uses: suzuki-shunsuke/commit-action@v0.0.8
+  - id: commit
+    uses: suzuki-shunsuke/commit-action@v0.0.8
     with:
       github_token: ${{ inputs.token }}
       repository: ${{ inputs.destination-repository }}

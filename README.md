@@ -44,6 +44,12 @@ Before using this action, you must checkout the source repository to ensure the 
 | `commit-message` | Commit message for the output repository | No | `LAST_COMMIT_MESSAGE (via ORIGIN_COMMIT from GITHUB_REF)` |
 | `destination-directory` | The directory to wipe and replace in the destination repository | No | `''` |
 
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| `pushed` | Whether a commit was pushed to the destination repository (`true` or `false`) |
+
 ### Commit Message Variables
 
 The `commit-message` input supports the following template variables:
