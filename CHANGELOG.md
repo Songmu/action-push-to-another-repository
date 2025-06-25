@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2.0.5](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.4...v2.0.5) - 2025-06-25
+- add outputs.pushed by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/26
+- add Branch Requirements section to README by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/28
+
 ## [v2.0.4](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.3...v2.0.4) - 2025-06-25
 - make token optional by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/22
 - update name of the action by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/24
