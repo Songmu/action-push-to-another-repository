@@ -99,11 +99,15 @@ jobs:
         app-id: ${{ secrets.APP_ID }}
         private-key: ${{ secrets.PRIVATE_KEY }}
         repositories: dest-repo
-    - name: Push to another repository
+    - id: push
+      name: Push to another repository
       uses: Songmu/action-push-to-another-repository@v2
       with:
         token: "${{ steps.generate_token.outputs.token }}"
         destination-repository: 'owner/dest-repo'
+    - name: Check if pushed
+      if: steps.push.outputs.pushed == 'true'
+      run: echo "Successfully pushed changes to the destination repository"
 ```
 
 ### Pull From Another Repository
