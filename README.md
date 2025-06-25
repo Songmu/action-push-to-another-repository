@@ -5,14 +5,22 @@ A GitHub Action that pushes files from a source repository to a destination repo
 > [!NOTE]
 > This is a maintained fork of the original [cpina/github-action-push-to-another-repository](https://github.com/cpina/github-action-push-to-another-repository) based on commit [7c1bd86](https://github.com/cpina/github-action-push-to-another-repository/commit/7c1bd869f38327ce403753fc2a5769e26cacb5ac).
 
-Latest version: v2.0.4
-
 ## Features
 - Push files from one repository to another
 - Configurable source and destination directories
 - Custom commit messages with template variables
 - Support for different destination branches
 - Creates signed commits when using GitHub App tokens
+
+## Quick Start
+
+```yaml
+steps:
+- uses: actions/checkout@v4
+- uses: Songmu/action-push-to-another-repository@v2
+  with:
+    destination-repository: 'owner/repo'
+```
 
 ## Requirements
 
