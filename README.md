@@ -117,12 +117,6 @@ jobs:
 
 ### Permissions
 
-This action requires the following permissions:
-
-**Source Repository (where the workflow runs):**
-- `contents: read` - Read files from the source repository
-
-**Destination Repository (where files are pushed):**
 - `contents: write` - Write files and create commits
 - `workflows: write` - Only needed if updating `.github/workflows/` files
 
