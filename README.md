@@ -28,21 +28,11 @@ steps:
 
 Before using this action, ensure the following requirements are met:
 
-1. **Source Repository Checkout**: You must checkout the source repository to ensure the files you want to push are available in the workflow:
-   ```yaml
-   - uses: actions/checkout@v4
-   ```
+1. **Source Repository Checkout**: You must checkout the source repository to ensure the files you want to push are available in the workflow.
 
 2. **Destination Branch**: The destination branch must already exist in the destination repository. If the branch doesn't exist, the action will fail.
 
-   To create a new branch before using this action, use [`Songmu/action-create-branch`](https://github.com/Songmu/action-create-branch):
-   ```yaml
-   - name: Create branch if needed
-     uses: Songmu/action-create-branch@v0
-     with:
-       repository: 'owner/dest-repo'
-       branch: 'new-branch'
-   ```
+   To create a new branch before using this action, use [`Songmu/action-create-branch`](https://github.com/Songmu/action-create-branch).
 
 ### Permissions
 
@@ -108,6 +98,32 @@ jobs:
     - name: Check if pushed
       if: steps.push.outputs.pushed == 'true'
       run: echo "Successfully pushed changes to the destination repository"
+```
+
+### Creating a New Branch
+
+```yaml
+name: Push to new branch
+on:
+  push:
+    branches:
+    - main
+jobs:
+  push-to-another-repository:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      persist-credentials: false
+    - name: Create branch if needed
+      uses: Songmu/action-create-branch@v0
+      with:
+        repository: 'owner/dest-repo'
+        branch: 'new-feature'
+    - name: Push to another repository
+      uses: Songmu/action-push-to-another-repository@v2
+      with:
+        destination-repository: 'owner/dest-repo'
+        destination-branch: 'new-feature'
 ```
 
 ### Pull From Another Repository
