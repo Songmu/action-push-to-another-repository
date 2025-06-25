@@ -51,16 +51,6 @@ This action requires the following permissions for the **destination repository*
 - `contents: write` - Write files and create commits
 - `workflows: write` - Only needed if updating `.github/workflows/` files
 
-## Usage
-
-### Basic Usage
-
-```yaml
-- name: Push to another repository
-  uses: Songmu/action-push-to-another-repository@v2
-  with:
-    destination-repository: 'owner/repo'
-```
 
 ## Inputs
 
@@ -87,9 +77,9 @@ The `commit-message` input supports the following template variables:
 - `ORIGIN_COMMIT`: Replaced by the URL@commit in the origin repository
 - `GITHUB_REF`: Replaced by the origin `$GITHUB_REF`
 
-## Example
+## Examples
 
-### Basic Usage
+### Using GitHub App Token
 
 ```yaml
 name: Push to another repository
