@@ -20,7 +20,7 @@ Latest version: v2.0.2
 - name: Push to another repository
   uses: Songmu/action-push-to-another-repository@v2
   with:
-    github-token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.GITHUB_TOKEN }}
     destination-repository: 'owner/repo'
 ```
 
@@ -28,7 +28,7 @@ Latest version: v2.0.2
 
 | Name | Description | Required | Default |
 |------|-------------|----------|---------|
-| `github-token` | GitHub token with write access to the destination repository | Yes | - |
+| `token` | GitHub token with write access to the destination repository | Yes | - |
 | `destination-repository` | Destination repository (format: `owner/repo`) | Yes | - |
 | `source-directory` | Source directory from the origin directory | No | `.` |
 | `destination-branch` | Destination branch name for the destination repository | No | `main` |
@@ -68,7 +68,7 @@ jobs:
     - name: Push to another repository
       uses: Songmu/action-push-to-another-repository@v2
       with:
-        github-token: "${{ steps.generate_token.outputs.token }}"
+        token: "${{ steps.generate_token.outputs.token }}"
         destination-repository: 'owner/dest-repo'
 ```
 
@@ -92,7 +92,7 @@ jobs:
     - name: Push to another repository
       uses: Songmu/action-push-to-another-repository@v2
       with:
-        github-token: "${{ secrets.GITHUB_TOKEN }}"
+        token: "${{ secrets.GITHUB_TOKEN }}"
         destination-repository: '$you/$yourepo'
         source-directory: './src'
         destination-directory: 'vendor/another-repo'
