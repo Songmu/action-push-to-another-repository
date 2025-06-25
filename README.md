@@ -14,15 +14,36 @@ Latest version: v2.0.4
 - Support for different destination branches
 - Creates signed commits when using GitHub App tokens
 
-## Usage
+## Requirements
 
 ### Prerequisites
 
-Before using this action, you must checkout the source repository to ensure the files you want to push are available in the workflow:
+Before using this action, ensure the following requirements are met:
 
-```yaml
-- uses: actions/checkout@v4
-```
+1. **Source Repository Checkout**: You must checkout the source repository to ensure the files you want to push are available in the workflow:
+   ```yaml
+   - uses: actions/checkout@v4
+   ```
+
+2. **Destination Branch**: The destination branch must already exist in the destination repository. If the branch doesn't exist, the action will fail.
+
+   To create a new branch before using this action, use [`Songmu/action-create-branch`](https://github.com/Songmu/action-create-branch):
+   ```yaml
+   - name: Create branch if needed
+     uses: Songmu/action-create-branch@v0
+     with:
+       repository: 'owner/dest-repo'
+       branch: 'new-branch'
+   ```
+
+### Permissions
+
+This action requires the following permissions for the **destination repository**:
+
+- `contents: write` - Write files and create commits
+- `workflows: write` - Only needed if updating `.github/workflows/` files
+
+## Usage
 
 ### Basic Usage
 
@@ -119,31 +140,6 @@ jobs:
 3. Creates a commit with the specified message
 4. Pushes the changes to the destination repository
 
-## Requirements
-
-### Branch Requirements
-
-This action requires the destination branch to already exist in the destination repository. If the branch doesn't exist, the action will fail.
-
-To create a new branch before using this action, use [`Songmu/action-create-branch`](https://github.com/Songmu/action-create-branch):
-
-```yaml
-- name: Create branch if needed
-  uses: Songmu/action-create-branch@v0
-  with:
-    repository: 'owner/dest-repo'
-    branch: 'new-branch'
-- name: Push to another repository
-  uses: Songmu/action-push-to-another-repository@v2
-  with:
-    destination-repository: 'owner/dest-repo'
-    destination-branch: 'new-branch'
-```
-
-### Permissions
-
-- `contents: write` - Write files and create commits
-- `workflows: write` - Only needed if updating `.github/workflows/` files
 
 ## License
 
