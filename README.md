@@ -16,6 +16,16 @@ Latest version: v2.0.3
 
 ## Usage
 
+### Prerequisites
+
+Before using this action, you must checkout the source repository to ensure the files you want to push are available in the workflow:
+
+```yaml
+- uses: actions/checkout@v4
+```
+
+### Basic Usage
+
 ```yaml
 - name: Push to another repository
   uses: Songmu/action-push-to-another-repository@v2
