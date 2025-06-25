@@ -3,7 +3,7 @@ description: >-
   Push files to another repository. Ideal for GitHub Pages, docs sync, and
   mirrors. Creates signed commits with App tokens.
 inputs:
-  github-token:
+  token:
     description: Github token with write access to the destination repository
     required: true
   destination-repository:
@@ -38,7 +38,7 @@ runs:
     uses: actions/checkout@v4
     with:
       repository: ${{ inputs.destination-repository }}
-      token: ${{ inputs.github-token }}
+      token: ${{ inputs.token }}
       ref: ${{ inputs.destination-branch }}
       path: .push-to-another-repository
   - id: prepare
@@ -51,7 +51,7 @@ runs:
       WORKTREE_DIR: .push-to-another-repository
   - uses: suzuki-shunsuke/commit-action@v0.0.8
     with:
-      github_token: ${{ inputs.github-token }}
+      github_token: ${{ inputs.token }}
       repository: ${{ inputs.destination-repository }}
       commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.destination-branch }}
