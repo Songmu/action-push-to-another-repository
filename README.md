@@ -5,8 +5,6 @@ A GitHub Action that pushes files from a source repository to a destination repo
 > [!NOTE]
 > This is a maintained fork of the original [cpina/github-action-push-to-another-repository](https://github.com/cpina/github-action-push-to-another-repository) based on commit [7c1bd86](https://github.com/cpina/github-action-push-to-another-repository/commit/7c1bd869f38327ce403753fc2a5769e26cacb5ac).
 
-Latest version: v2.0.4
-
 ## Features
 - Push files from one repository to another
 - Configurable source and destination directories
@@ -14,15 +12,46 @@ Latest version: v2.0.4
 - Support for different destination branches
 - Creates signed commits when using GitHub App tokens
 
-## Usage
+## Quick Start
+
+```yaml
+steps:
+- uses: actions/checkout@v4
+- uses: Songmu/action-push-to-another-repository@v2
+  with:
+    destination-repository: 'owner/repo'
+```
+
+## Requirements
 
 ### Prerequisites
 
-Before using this action, you must checkout the source repository to ensure the files you want to push are available in the workflow:
+Before using this action, ensure the following requirements are met:
 
-```yaml
-- uses: actions/checkout@v4
-```
+1. **Source Repository Checkout**: You must checkout the source repository to ensure the files you want to push are available in the workflow:
+   ```yaml
+   - uses: actions/checkout@v4
+   ```
+
+2. **Destination Branch**: The destination branch must already exist in the destination repository. If the branch doesn't exist, the action will fail.
+
+   To create a new branch before using this action, use [`Songmu/action-create-branch`](https://github.com/Songmu/action-create-branch):
+   ```yaml
+   - name: Create branch if needed
+     uses: Songmu/action-create-branch@v0
+     with:
+       repository: 'owner/dest-repo'
+       branch: 'new-branch'
+   ```
+
+### Permissions
+
+This action requires the following permissions for the **destination repository**:
+
+- `contents: write` - Write files and create commits
+- `workflows: write` - Only needed if updating `.github/workflows/` files
+
+## Usage
 
 ### Basic Usage
 
@@ -119,12 +148,6 @@ jobs:
 3. Creates a commit with the specified message
 4. Pushes the changes to the destination repository
 
-## Requirements
-
-### Permissions
-
-- `contents: write` - Write files and create commits
-- `workflows: write` - Only needed if updating `.github/workflows/` files
 
 ## License
 
