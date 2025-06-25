@@ -1,5 +1,10 @@
 # Changelog
 
+## [v2.0.3](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.2...v2.0.3) - 2025-06-25
+- update README.md by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/18
+- add example of pull to README by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/20
+- [incompatible] change argument name to token from github-token by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/21
+
 ## [v2.0.2](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.1...v2.0.2) - 2025-06-23
 - [bugfix] fix way to output commit message by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/16
 
