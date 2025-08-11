@@ -40,7 +40,7 @@ runs:
   using: composite
   steps:
   - name: Checkout destination repository into a worktree
-    uses: actions/checkout@v4
+    uses: actions/checkout@v5
     with:
       repository: ${{ inputs.destination-repository }}
       token: ${{ inputs.token }}
