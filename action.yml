@@ -40,7 +40,7 @@ runs:
   using: composite
   steps:
   - name: Checkout destination repository into a worktree
-    uses: actions/checkout@v4
+    uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
     with:
       repository: ${{ inputs.destination-repository }}
       token: ${{ inputs.token }}
@@ -57,7 +57,7 @@ runs:
       DESTINATION_DIRECTORY: ${{ inputs.destination-directory }}
       WORKTREE_DIR: .push-to-another-repository
   - id: commit
-    uses: suzuki-shunsuke/commit-action@v0.0.8
+    uses: suzuki-shunsuke/commit-action@ca8e761ccb3533295065c3e90a8555fcdde8b467 # v0.0.10
     with:
       github_token: ${{ inputs.token }}
       repository: ${{ inputs.destination-repository }}
