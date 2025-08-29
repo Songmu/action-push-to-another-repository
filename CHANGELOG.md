@@ -1,5 +1,8 @@
 # Changelog
 
+## [v2.0.7](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.6...v2.0.7) - 2025-08-29
+- update deps in action.yml and introduce pinact by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/34
+
 ## [v2.0.6](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.5...v2.0.6) - 2025-06-25
 - set persist-credentials false in action.yml by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/29
 
