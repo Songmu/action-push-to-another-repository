@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2.0.8](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.7...v2.0.8) - 2025-10-01
+- Bump suzuki-shunsuke/commit-action from 0.0.10 to 0.0.11 by @dependabot[bot] in https://github.com/Songmu/action-push-to-another-repository/pull/36
+- fallback to git command when the commit-action failed by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/37
+
 ## [v2.0.7](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.6...v2.0.7) - 2025-08-29
 - update deps in action.yml and introduce pinact by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/34
 
