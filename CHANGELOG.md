@@ -1,5 +1,8 @@
 # Changelog
 
+## [v2.0.9](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.8...v2.0.9) - 2025-10-02
+- fix fallback by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/39
+
 ## [v2.0.8](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.7...v2.0.8) - 2025-10-01
 - Bump suzuki-shunsuke/commit-action from 0.0.10 to 0.0.11 by @dependabot[bot] in https://github.com/Songmu/action-push-to-another-repository/pull/36
 - fallback to git command when the commit-action failed by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/37
