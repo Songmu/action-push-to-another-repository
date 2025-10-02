@@ -48,7 +48,7 @@ runs:
       persist-credentials: false
       path: .push-to-another-repository
   - id: prepare
-    name: "Prepare the destination repository in the workspace before committing"
+    name: "Prepare the destination repository in the worktree before committing"
     run: $GITHUB_ACTION_PATH/entrypoint.sh
     shell: bash
     env:
@@ -63,6 +63,7 @@ runs:
       repository: ${{ inputs.destination-repository }}
       commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.destination-branch }}
+    working-directory: .push-to-another-repository
     continue-on-error: true
   - id: fallback
     name: fallback to git command for large assets
@@ -81,14 +82,12 @@ runs:
       COMMIT_MESSAGE: ${{ steps.prepare.outputs.commit-message }}
       DESTINATION_BRANCH: ${{ inputs.destination-branch }}
       DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
+    working-directory: .push-to-another-repository
     continue-on-error: true
     shell: bash
-  - name: restore stashed original workspace from worktree
+  - name: remove worktree
     run: |
-      TEMP_DIR="$(mktemp -d)/$WORKTREE_DIR"
-      mv ./$WORKTREE_DIR "$TEMP_DIR"
-      rm -rf "$GITHUB_WORKSPACE"
-      mv "$TEMP_DIR" "$GITHUB_WORKSPACE"
+      rm -rf "$WORKTREE_DIR"
     shell: bash
     if: always()
     env:

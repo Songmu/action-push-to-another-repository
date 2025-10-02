@@ -24,13 +24,18 @@ mkdir -p "$ABSOLUTE_DESTINATION_DIRECTORY"
 
 mv "$TEMP_WORKDIR/.git" "$CLONE_DIR/.git"
 
-echo "[+] evacuate source .git directory to avoid conflicts when mirroring the root directory"
-mv "$GITHUB_WORKSPACE/.git" "$TEMP_WORKDIR/.git"
+echo "[+] Evacuating source .git directory to avoid conflicts when mirroring the root directory"
+mv "./.git" "$TEMP_WORKDIR/.git"
 
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $DESTINATION_DIRECTORY in destination repository"
 cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$DESTINATION_DIRECTORY"
 
-cd "$CLONE_DIR"
+echo "[+] Restoring source .git directory"
+mv "$TEMP_WORKDIR/.git" "./.git"
+
+echo "[+] Moving cloned repository to $WORKTREE_DIR in the workspace"
+mv "$CLONE_DIR" "./$WORKTREE_DIR"
+
 echo "[+] Building commit message"
 COMMIT_MESSAGE="${COMMIT_MESSAGE/LAST_COMMIT_MESSAGE/$LAST_COMMIT_MESSAGE}"
 ORIGIN_COMMIT="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
@@ -41,14 +46,3 @@ COMMIT_MESSAGE="${COMMIT_MESSAGE/GITHUB_REF/$GITHUB_REF}"
   echo "$COMMIT_MESSAGE"
   echo 'EOF'
 } >> "$GITHUB_OUTPUT"
-
-echo "[+] Swap github.workspace with the cloned repository to work with commit-action"
-mv "$GITHUB_WORKSPACE" "$TEMP_WORKDIR/$WORKTREE_DIR"
-mv "$TEMP_WORKDIR/.git" "$TEMP_WORKDIR/$WORKTREE_DIR/.git"
-mv "$CLONE_DIR" "$GITHUB_WORKSPACE"
-
-# Stash the original workspace in a ignored worktree directory.
-mv "$TEMP_WORKDIR/$WORKTREE_DIR" "$GITHUB_WORKSPACE/$WORKTREE_DIR"
-cd "$GITHUB_WORKSPACE"
-# The stash directory is ignored from version control.
-echo "$WORKTREE_DIR" >> .git/info/exclude
