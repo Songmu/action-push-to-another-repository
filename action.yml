@@ -64,18 +64,20 @@ runs:
       commit_message: ${{ steps.prepare.outputs.commit-message }}
       branch: ${{ inputs.destination-branch }}
     continue-on-error: true
-  - name: fallback to git command for large assets
-    if: failure()
+  - id: fallback
+    name: fallback to git command for large assets
+    if: steps.commit.outcome == 'failure'
     run: |
       set -euo pipefail
       git config user.name "${GITHUB_ACTOR}"
       git config user.email "${GITHUB_ACTOR}"@users.noreply.github.com
-      repo="https://$GITHUB_ACTOR:$GITHUB_TOKEN@$github.com/${DESTINATION_REPOSITORY}.git"
+      repo="https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${DESTINATION_REPOSITORY}.git"
       git add .
       git diff-index --quiet HEAD || git commit --message "$COMMIT_MESSAGE"
       git push $repo --set-upstream "$DESTINATION_BRANCH"
     env:
       GITHUB_ACTOR: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ inputs.token }}
       COMMIT_MESSAGE: ${{ steps.prepare.outputs.commit-message }}
       DESTINATION_BRANCH: ${{ inputs.destination-branch }}
       DESTINATION_REPOSITORY: ${{ inputs.destination-repository }}
@@ -91,6 +93,10 @@ runs:
     if: always()
     env:
       WORKTREE_DIR: .push-to-another-repository
+  - name: Check if commit or fallback succeeded
+    if: steps.fallback.outcome == 'failure'
+    run: exit 1
+    shell: bash
 branding:
   icon: git-commit
   color: green
