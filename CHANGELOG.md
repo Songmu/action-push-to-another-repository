@@ -1,5 +1,8 @@
 # Changelog
 
+## [v2.0.10](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.9...v2.0.10) - 2025-10-02
+- refactor: simplify workspace handling by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/41
+
 ## [v2.0.9](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.8...v2.0.9) - 2025-10-02
 - fix fallback by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/39
 
