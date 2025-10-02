@@ -1,5 +1,8 @@
 # Changelog
 
+## [v2.0.11](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.10...v2.0.11) - 2025-10-02
+- Revert "refactor: simplify workspace handling" by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/43
+
 ## [v2.0.10](https://github.com/Songmu/action-push-to-another-repository/compare/v2.0.9...v2.0.10) - 2025-10-02
 - refactor: simplify workspace handling by @Songmu in https://github.com/Songmu/action-push-to-another-repository/pull/41
 
