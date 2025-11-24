@@ -57,7 +57,7 @@ runs:
       DESTINATION_DIRECTORY: ${{ inputs.destination-directory }}
       WORKTREE_DIR: .push-to-another-repository
   - id: commit
-    uses: suzuki-shunsuke/commit-action@b4aee3f297a855b761e0db5736a73566a7807fe2 # v0.0.11
+    uses: suzuki-shunsuke/commit-action@87b297f0ce551411b43d1880f4fb3cbc60381055 # v0.0.14
     with:
       github_token: ${{ inputs.token }}
       repository: ${{ inputs.destination-repository }}
